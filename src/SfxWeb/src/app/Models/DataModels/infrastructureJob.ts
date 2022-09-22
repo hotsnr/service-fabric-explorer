@@ -24,7 +24,7 @@ export class InfrastructureJob extends DataModelBase<IRawInfrastructureJob> {
        const repairTaskActual = this.data.repairCollection.collection.find(rt => rt.id === this.RepairTask.TaskId);
        this.VmImpact = [];
        this.NodeImpact = [];
-       if (repairTaskActual != null && repairTaskActual.raw.Impact !== null)
+       if (repairTaskActual && repairTaskActual.raw.Impact && repairTaskActual.raw.Impact.NodeImpactList)
        {
            repairTaskActual.raw.Impact.NodeImpactList.forEach(nt => this.NodeImpact.push(nt.NodeName + ':' + nt.ImpactLevel) );
        }
