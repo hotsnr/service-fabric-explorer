@@ -41,6 +41,7 @@ import { ApplicationTimelineGenerator, ClusterTimelineGenerator, NodeTimelineGen
 import groupBy from 'lodash/groupBy';
 import { StandaloneIntegrationService } from './standalone-integration.service';
 import { InfrastructureCollection } from '../Models/DataModels/collections/infrastructureCollection';
+import { InfrastructurePendingUpdateCollection } from '../Models/DataModels/collections/InfrastructurePendingUpdatesCollection';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,7 @@ export class DataService {
   public backupPolicies: BackupPolicyCollection;
   public repairCollection: RepairTaskCollection;
   public infrastructureCollection: InfrastructureCollection;
+  public infrastructurePendingUpdatesCollection: InfrastructurePendingUpdateCollection;
 
   public readOnlyHeader: boolean =  null;
   public clusterNameMetadata: string = null;
@@ -83,6 +85,7 @@ export class DataService {
     this.backupPolicies = new BackupPolicyCollection(this);
     this.repairCollection = new RepairTaskCollection(this);
     this.infrastructureCollection = new InfrastructureCollection(this);
+    this.infrastructurePendingUpdatesCollection = new InfrastructurePendingUpdateCollection(this);
     this.clusterHealth = this.getClusterHealth(HealthStateFilterFlags.Default, HealthStateFilterFlags.None, HealthStateFilterFlags.None);
     if(standalone.isStandalone()) {
       this.clusterNameMetadata = standalone.clusterUrl;

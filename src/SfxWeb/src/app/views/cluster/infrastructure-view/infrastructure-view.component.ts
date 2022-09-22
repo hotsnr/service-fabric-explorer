@@ -7,6 +7,7 @@ import { InfrastructureJob } from 'src/app/Models/DataModels/infrastructureJob';
 import { DataService } from 'src/app/services/data.service';
 import { SettingsService } from 'src/app/services/settings.service';
 import { BaseControllerDirective } from 'src/app/ViewModels/BaseController';
+import { NodeLevelUpdatesService } from 'src/app/services/node-level-updates.service';
 
 @Component({
   selector: 'app-infrastructure-view',
@@ -20,13 +21,15 @@ export class InfrastructureViewComponent extends BaseControllerDirective {
   allPendingMRJobs: InfrastructureJob[] = [];
   executingMRJobs: InfrastructureJob[] = [];
 
-  constructor(private data: DataService, injector: Injector, private settings: SettingsService) {
+  constructor(private data: DataService, injector: Injector, private settings: SettingsService, private nlu: NodeLevelUpdatesService) {
     super(injector);
   }
 
   setup() {
     this.collection = this.data.infrastructureCollection;
     this.repairTaskCollection = this.data.repairCollection;
+
+    this.nlu.getNodeStatus().subscribe(v => console.log(v));
   }
 
   refresh(messageHandler?: IResponseMessageHandler): Observable<any> {

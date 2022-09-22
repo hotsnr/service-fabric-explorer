@@ -1137,3 +1137,7 @@ export interface IRawServiceNameInfo{
         Id: string;
         Name: string;
     }
+
+export interface IRawInfrastructurePendingUpdate {
+    RoleInstanceName: string;
+}

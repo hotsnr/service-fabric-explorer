@@ -12,7 +12,7 @@ import { IRawCollection, IRawClusterManifest, IRawClusterHealth, IRawClusterUpgr
          IRawApplication, IRawService, IRawCreateServiceDescription, IRawCreateServiceFromTemplateDescription, IRawUpdateServiceDescription, IRawServiceDescription,
          IRawServiceHealth, IRawApplicationUpgradeProgress, IRawCreateComposeDeploymentDescription, IRawPartition, IRawPartitionHealth, IRawPartitionLoadInformation,
          IRawReplicaOnPartition, IRawReplicaHealth, IRawImageStoreContent, IRawStoreFolderSize, IRawClusterVersion, IRawList, IRawAadMetadata, IRawStorage, IRawRepairTask,
-         IRawServiceNameInfo, IRawApplicationNameInfo, IRawBackupEntity, IRawInfrastructureJob, IRawInfraRepairTask, IRawRoleInstanceImpact } from '../Models/RawDataTypes';
+         IRawServiceNameInfo, IRawApplicationNameInfo, IRawBackupEntity, IRawInfrastructureJob, IRawInfraRepairTask, IRawRoleInstanceImpact, IRawInfrastructurePendingUpdate } from '../Models/RawDataTypes';
 import { mergeMap, map, catchError, finalize, skip } from 'rxjs/operators';
 import { Application } from '../Models/DataModels/Application';
 import { Service } from '../Models/DataModels/Service';
@@ -768,6 +768,12 @@ export class RestClientService {
         const url = `$/InvokeInfrastructureQuery?api-version=6.0&Command=GetJobs&ServiceId=` + serviceId;
 
         return this.get(this.getApiUrl(url), 'Get Infrastructure  Jobs', messageHandler);
+    }
+
+    public getInfrastructurePendingUpdates(serviceId: string, messageHandler?: IResponseMessageHandler): Observable<IRawInfrastructurePendingUpdate[]> {
+        const url = `$/InvokeInfrastructureQuery?api-version=6.0&Command=GetPendingUpdates&ServiceId=` + serviceId;
+
+        return this.get(this.getApiUrl(url), 'Get Infrastructure  Pending Updates', messageHandler);
     }
 
   public restartReplica(nodeName: string, partitionId: string, replicaId: string, messageHandler?: IResponseMessageHandler): Observable<{}> {
